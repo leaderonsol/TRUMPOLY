@@ -7,23 +7,92 @@
     <title>$TRUMPOLY - The Mystical Tale of Wisdom on Solana</title>
     <meta name="description" content="Join Mejora's mystical journey with $TRUMPOLY on Solana. Experience a tale of wisdom, kindness, and personal growth through storytelling.">
     
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BW2DS89P0F"></script>
+    <!-- Preload critical assets -->
+    <link rel="preload" href="images/main.png" as="image">
+    <link rel="preload" href="images/1.jpeg" as="image">
+    <link rel="preload" href="images/2.jpg" as="image">
+    
+    <!-- Defer non-critical CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Load scripts with defer -->
+    <script defer src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/gsap.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/ScrollTrigger.min.js"></script>
+
+    <!-- Optimize image loading -->
     <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-BW2DS89P0F', {
-            'stream_id': '10076693999'
+        // Add lazy loading to images
+        document.addEventListener('DOMContentLoaded', function() {
+            const images = document.querySelectorAll('img[loading="lazy"]');
+            if ('loading' in HTMLImageElement.prototype) {
+                images.forEach(img => {
+                    if (img.dataset.src) {
+                        img.src = img.dataset.src;
+                    }
+                });
+            } else {
+                // Fallback for browsers that don't support lazy loading
+                const script = document.createElement('script');
+                script.src = 'https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js';
+                document.body.appendChild(script);
+            }
         });
     </script>
-    
-    <link rel="icon" type="image/png" href="images/green.png">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/ScrollTrigger.min.js"></script>
+
+    <!-- Critical CSS inline -->
     <style>
+        /* Initial loading state */
+        body {
+            background: #0f172a;
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Reduce initial animation complexity */
+        .hero-image {
+            opacity: 0;
+            transition: opacity 0.3s ease-in;
+        }
+        
+        .hero-image.loaded {
+            opacity: 1;
+        }
+        
+        /* Defer non-critical animations */
+        @media (prefers-reduced-motion: no-preference) {
+            .animation-ready .hero-image {
+                transition: transform 0.2s ease-out;
+            }
+        }
+
+        /* Optimize image loading */
+        img {
+            opacity: 0;
+            transition: opacity 0.3s ease-in;
+        }
+
+        img.loaded {
+            opacity: 1;
+        }
+
+        /* Reduce animation complexity */
+        .hero-image {
+            transition: transform 0.2s ease-out;
+            will-change: transform;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+
+        /* Optimize particle effects */
+        .particle {
+            will-change: transform;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+
         html {
             scroll-behavior: smooth;
             overflow-y: auto;
@@ -642,7 +711,7 @@
     <section class="pt-32 pb-20 hero-gradient">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row items-center justify-between">
-                <div class="md:w-1/2 text-center md:text-left opacity-0 w-full px-2" id="hero-text">
+                <div class="md:w-1/2 text-center md:text-left w-full px-2" id="hero-text">
                     <h1 class="text-4xl md:text-6xl lg:text-8xl font-bold mb-4 md:mb-8 leading-tight">
                         <span class="gradient-text" id="title-text">
                             $TRUMPOLY
@@ -677,13 +746,15 @@
                         </a>
                     </div>
                 </div>
-                <div class="md:w-1/2 mt-16 md:mt-0 opacity-0" id="hero-card">
+                <div class="md:w-1/2 mt-16 md:mt-0" id="hero-card">
                     <div class="relative flex justify-center items-center py-8">
                         <div class="absolute inset-0 bg-gradient-to-b from-transparent to-blue-500/10 rounded-2xl"></div>
                         <div class="z-20 hero-image-container">
                             <img src="images/main.png" 
                                 alt="Trumpoly - Wizard of Solanaburg" 
                                 class="w-[280px] md:w-[400px] rounded-2xl hero-image"
+                                loading="lazy"
+                                decoding="async"
                                 style="filter: drop-shadow(0 0 20px rgba(64, 128, 255, 0.3));">
                         </div>
                         <div class="absolute inset-0 bg-gradient-radial from-blue-500/20 via-transparent to-transparent opacity-50 rounded-2xl"></div>
@@ -696,28 +767,39 @@
     <!-- Features Section -->
     <section class="py-20 relative overflow-hidden">
         <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Story Card - Full Width -->
-                <div class="glass-effect p-8 rounded-3xl text-center transform hover:scale-105 transition-all duration-300 md:col-span-3 mb-8">
-                    <div class="text-6xl mb-4 gradient-text">🧙‍♂️</div>
-                    <h3 class="text-2xl font-bold mb-2">Trumpoly's Quest</h3>
-                    <p class="text-gray-300 text-lg leading-relaxed">A wandering wizard embodying kindness, wisdom, bravery, and humility in his fight against evil.</p>
-                </div>
-                <!-- Other Cards -->
-                <div class="glass-effect p-8 rounded-3xl text-center transform hover:scale-105 transition-all duration-300">
-                    <div class="text-6xl mb-4 gradient-text">👑</div>
-                    <h3 class="text-2xl font-bold mb-2">Mejora's Wisdom</h3>
-                    <p class="text-gray-300">The mystical oracle who guides our tale, sharing ancient wisdom and life lessons.</p>
-                </div>
-                <div class="glass-effect p-8 rounded-3xl text-center transform hover:scale-105 transition-all duration-300">
-                    <div class="text-6xl mb-4 gradient-text">🐉</div>
-                    <h3 class="text-2xl font-bold mb-2">The Dark Emperor</h3>
-                    <p class="text-gray-300">Asu Goverdragon, the corrupt emperor whose disciples spread chaos and destruction.</p>
-                </div>
-                <div class="glass-effect p-8 rounded-3xl text-center transform hover:scale-105 transition-all duration-300">
-                    <div class="text-6xl mb-4">⚔️</div>
-                    <h3 class="text-2xl font-bold mb-2">The Fellowship</h3>
-                    <p class="text-gray-300">Join the alliance of brave souls supporting Trumpoly in his quest for justice.</p>
+            <div class="absolute inset-0 z-0">
+                <img src="images/2.jpg" 
+                     alt="Magical Realm of Solanaburg" 
+                     class="w-full h-full object-cover opacity-20 blur-sm"
+                     loading="lazy"
+                     decoding="async"
+                     style="filter: brightness(0.4) saturate(1.5);">
+            </div>
+            <!-- Content with glass effect overlay -->
+            <div class="relative z-10">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- Story Card - Full Width -->
+                    <div class="glass-effect p-8 rounded-3xl text-center transform hover:scale-105 transition-all duration-300 md:col-span-3 mb-8">
+                        <div class="text-6xl mb-4 gradient-text">🧙‍♂️</div>
+                        <h3 class="text-2xl font-bold mb-2">Trumpoly's Quest</h3>
+                        <p class="text-gray-300 text-lg leading-relaxed">A wandering wizard embodying kindness, wisdom, bravery, and humility in his fight against evil.</p>
+                    </div>
+                    <!-- Other Cards -->
+                    <div class="glass-effect p-8 rounded-3xl text-center transform hover:scale-105 transition-all duration-300">
+                        <div class="text-6xl mb-4 gradient-text">👑</div>
+                        <h3 class="text-2xl font-bold mb-2">Mejora's Wisdom</h3>
+                        <p class="text-gray-300">The mystical oracle who guides our tale, sharing ancient wisdom and life lessons.</p>
+                    </div>
+                    <div class="glass-effect p-8 rounded-3xl text-center transform hover:scale-105 transition-all duration-300">
+                        <div class="text-6xl mb-4 gradient-text">🐉</div>
+                        <h3 class="text-2xl font-bold mb-2">The Dark Emperor</h3>
+                        <p class="text-gray-300">Asu Goverdragon, the corrupt emperor whose disciples spread chaos and destruction.</p>
+                    </div>
+                    <div class="glass-effect p-8 rounded-3xl text-center transform hover:scale-105 transition-all duration-300">
+                        <div class="text-6xl mb-4">⚔️</div>
+                        <h3 class="text-2xl font-bold mb-2">The Fellowship</h3>
+                        <p class="text-gray-300">Join the alliance of brave souls supporting Trumpoly in his quest for justice.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -772,6 +854,8 @@
                         <img src="images/1.jpeg" 
                              alt="Mejora - The Mystical Guide" 
                              class="rounded-2xl w-full max-w-[500px] mx-auto shadow-2xl transform hover:scale-105 transition-all duration-300"
+                             loading="lazy"
+                             decoding="async"
                              style="filter: drop-shadow(0 0 20px rgba(147, 197, 253, 0.3));">
                     </div>
                     <div class="md:w-1/2 text-center md:text-left">
@@ -1095,8 +1179,51 @@
             });
         });
 
-        // Add this to your existing script section
-        async function fetchDexscreenerData() {
+        // Add this at the start of your script section
+        document.addEventListener('DOMContentLoaded', function() {
+            // Optimize image loading
+            const images = document.querySelectorAll('img');
+            images.forEach(img => {
+                img.addEventListener('load', function() {
+                    this.classList.add('loaded');
+                });
+            });
+
+            // Reduce animation frequency
+            let ticking = false;
+            document.addEventListener('mousemove', (e) => {
+                if (!ticking) {
+                    window.requestAnimationFrame(() => {
+                        handleMouseMove(e);
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            });
+
+            function handleMouseMove(e) {
+                if (!heroImage) return;
+                const { left, top, width, height } = heroContainer.getBoundingClientRect();
+                const centerX = left + width / 2;
+                const centerY = top + height / 2;
+                const mouseX = (e.clientX - centerX) * 0.02;
+                const mouseY = (e.clientY - centerY) * 0.02;
+                
+                heroImage.style.transform = `
+                    perspective(1000px)
+                    rotateX(${-mouseY}deg)
+                    rotateY(${mouseX}deg)
+                    translateZ(10px)
+                `;
+            }
+
+            // Optimize scroll animations
+            ScrollTrigger.config({ limitCallbacks: true });
+            ScrollTrigger.clearScrollMemory();
+        });
+
+        // Reduce Dexscreener API call frequency
+        const fetchDexscreenerData = debounce(async function() {
             try {
                 const response = await fetch('https://api.dexscreener.com/latest/dex/tokens/9Y69BuZTXpieDoUy8mva17fZWFVhi5Gi98ebqtoFpump');
                 const data = await response.json();
@@ -1113,6 +1240,18 @@
             } catch (error) {
                 console.error('Error fetching Dexscreener data:', error);
             }
+        }, 5000);
+
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
         }
 
         function formatNumber(num) {
