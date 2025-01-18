@@ -7,65 +7,28 @@
     <title>$TRUMPOLY - The Mystical Tale of Wisdom on Solana</title>
     <meta name="description" content="Join Mejora's mystical journey with $TRUMPOLY on Solana. Experience a tale of wisdom, kindness, and personal growth through storytelling.">
     
-    <!-- Preload critical assets -->
-    <link rel="preload" href="images/main.png" as="image">
-    <link rel="preload" href="images/1.jpeg" as="image">
-    <link rel="preload" href="images/2.jpg" as="image">
-    
-    <!-- Defer non-critical CSS -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Load scripts with defer -->
-    <script defer src="https://cdn.tailwindcss.com"></script>
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/gsap.min.js"></script>
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/ScrollTrigger.min.js"></script>
-
-    <!-- Optimize image loading -->
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BW2DS89P0F"></script>
     <script>
-        // Add lazy loading to images
-        document.addEventListener('DOMContentLoaded', function() {
-            const images = document.querySelectorAll('img[loading="lazy"]');
-            if ('loading' in HTMLImageElement.prototype) {
-                images.forEach(img => {
-                    if (img.dataset.src) {
-                        img.src = img.dataset.src;
-                    }
-                });
-            } else {
-                // Fallback for browsers that don't support lazy loading
-                const script = document.createElement('script');
-                script.src = 'https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js';
-                document.body.appendChild(script);
-            }
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-BW2DS89P0F', {
+            'stream_id': '10076693999'
         });
     </script>
-
-    <!-- Critical CSS inline -->
+    
+    <link rel="icon" type="image/png" href="images/green.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/ScrollTrigger.min.js"></script>
     <style>
-        /* Initial loading state */
-        body {
-            background: #0f172a;
+        html, body {
+            background: #0f172a;  /* Dark background color immediately */
             opacity: 1;
             visibility: visible;
-        }
-        
-        /* Reduce initial animation complexity */
-        .hero-image {
-            opacity: 0;
-            transition: opacity 0.3s ease-in;
-        }
-        
-        .hero-image.loaded {
-            opacity: 1;
-        }
-        
-        /* Defer non-critical animations */
-        @media (prefers-reduced-motion: no-preference) {
-            .animation-ready .hero-image {
-                transition: transform 0.2s ease-out;
-            }
+            transition: opacity 0.4s ease;
         }
 
         /* Optimize image loading */
@@ -711,7 +674,7 @@
     <section class="pt-32 pb-20 hero-gradient">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row items-center justify-between">
-                <div class="md:w-1/2 text-center md:text-left w-full px-2" id="hero-text">
+                <div class="md:w-1/2 text-center md:text-left opacity-0 w-full px-2" id="hero-text">
                     <h1 class="text-4xl md:text-6xl lg:text-8xl font-bold mb-4 md:mb-8 leading-tight">
                         <span class="gradient-text" id="title-text">
                             $TRUMPOLY
@@ -746,15 +709,13 @@
                         </a>
                     </div>
                 </div>
-                <div class="md:w-1/2 mt-16 md:mt-0" id="hero-card">
+                <div class="md:w-1/2 mt-16 md:mt-0 opacity-0" id="hero-card">
                     <div class="relative flex justify-center items-center py-8">
                         <div class="absolute inset-0 bg-gradient-to-b from-transparent to-blue-500/10 rounded-2xl"></div>
                         <div class="z-20 hero-image-container">
                             <img src="images/main.png" 
                                 alt="Trumpoly - Wizard of Solanaburg" 
                                 class="w-[280px] md:w-[400px] rounded-2xl hero-image"
-                                loading="lazy"
-                                decoding="async"
                                 style="filter: drop-shadow(0 0 20px rgba(64, 128, 255, 0.3));">
                         </div>
                         <div class="absolute inset-0 bg-gradient-radial from-blue-500/20 via-transparent to-transparent opacity-50 rounded-2xl"></div>
@@ -767,12 +728,11 @@
     <!-- Features Section -->
     <section class="py-20 relative overflow-hidden">
         <div class="container mx-auto px-4">
+            <!-- Background Image -->
             <div class="absolute inset-0 z-0">
                 <img src="images/2.jpg" 
                      alt="Magical Realm of Solanaburg" 
                      class="w-full h-full object-cover opacity-20 blur-sm"
-                     loading="lazy"
-                     decoding="async"
                      style="filter: brightness(0.4) saturate(1.5);">
             </div>
             <!-- Content with glass effect overlay -->
@@ -854,8 +814,6 @@
                         <img src="images/1.jpeg" 
                              alt="Mejora - The Mystical Guide" 
                              class="rounded-2xl w-full max-w-[500px] mx-auto shadow-2xl transform hover:scale-105 transition-all duration-300"
-                             loading="lazy"
-                             decoding="async"
                              style="filter: drop-shadow(0 0 20px rgba(147, 197, 253, 0.3));">
                     </div>
                     <div class="md:w-1/2 text-center md:text-left">
