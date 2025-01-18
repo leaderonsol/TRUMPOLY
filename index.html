@@ -25,230 +25,61 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/ScrollTrigger.min.js"></script>
     <style>
         html, body {
-            background: #0f172a;  /* Dark background color immediately */
-            opacity: 1;
-            visibility: visible;
-            transition: opacity 0.4s ease;
-        }
-
-        /* Optimize image loading */
-        img {
-            opacity: 0;
-            transition: opacity 0.3s ease-in;
-        }
-
-        img.loaded {
-            opacity: 1;
-        }
-
-        /* Reduce animation complexity */
-        .hero-image {
-            transition: transform 0.2s ease-out;
-            will-change: transform;
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
-        }
-
-        /* Optimize particle effects */
-        .particle {
-            will-change: transform;
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
-        }
-
-        html {
-            scroll-behavior: smooth;
-            overflow-y: auto;
-            overflow-x: hidden;
+            background: #0f172a;  /* Dark background color */
+            color: white;
         }
 
         body {
             font-family: 'Space Grotesk', sans-serif;
-            background: linear-gradient(
-                135deg, 
-                #0f172a 0%,
-                #1e293b 25%,
-                #312e81 50%,
-                #1e293b 75%,
-                #0f172a 100%
-            );
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            position: relative;
-            overflow-x: hidden;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); /* Simplified gradient */
             min-height: 100vh;
-            width: 100%;
-        }
-
-        .container {
-            max-width: 100%;
+            position: relative;
             overflow-x: hidden;
-            margin: 0 auto;
-            padding-left: 1rem;
-            padding-right: 1rem;
         }
 
-        section {
-            overflow: hidden;
-            position: relative;
-            width: 100%;
+        /* Remove complex background animations */
+        .background-effects,
+        .particle,
+        .orb,
+        .shape {
+            display: none;
         }
 
-        /* Mobile optimization */
-        @media (max-width: 768px) {
-            .container {
-                padding-left: 0.5rem;
-                padding-right: 0.5rem;
-            }
-            
-            .overflow-x-auto {
-                -webkit-overflow-scrolling: touch;
-            }
-        }
-        
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 50% 50%, rgba(199, 210, 254, 0.15) 0%, transparent 80%); /* Ethereal glow */
-            pointer-events: none;
-            z-index: 1;
-        }
-        
-        .particle {
-            position: fixed;
-            width: 4px;
-            height: 4px;
-            background: rgba(147, 197, 253, 0.5); /* Soft blue particles */
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 0;
-        }
-        
+        /* Simplify hero gradient */
         .hero-gradient {
-            background: radial-gradient(circle at center, rgba(129, 140, 248, 0.15) 0%, rgba(0,0,0,0) 70%),
-                        linear-gradient(135deg, rgba(79, 70, 229, 0.1) 0%, rgba(129, 140, 248, 0.1) 100%);
+            background: radial-gradient(circle at center, rgba(129, 140, 248, 0.1) 0%, rgba(0,0,0,0) 70%);
             position: relative;
             overflow: hidden;
         }
-        
-        .hero-gradient::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path fill="%23ff1493" fill-opacity="0.05" d="M45.3,-76.3C59.9,-69.9,73.5,-59.2,80.9,-45.1C88.4,-31,89.7,-13.5,87.8,3.1C85.8,19.7,80.7,35.3,71.3,47.7C61.9,60.1,48.2,69.2,33.4,74.9C18.7,80.6,2.8,82.9,-12.9,80.4C-28.7,77.9,-44.3,70.7,-57.4,60C-70.4,49.3,-80.9,35.1,-85.5,19C-90.1,2.8,-88.8,-15.3,-82.2,-30.5C-75.6,-45.7,-63.8,-58,-49.8,-65.1C-35.8,-72.2,-19.5,-74,-1.9,-71.1C15.7,-68.2,30.7,-82.7,45.3,-76.3Z" transform="translate(100 100)" /></svg>') no-repeat center center;
-            animation: rotate 60s linear infinite;
-            opacity: 0.1;
-        }
-        
-        .glow {
-            box-shadow: 0 0 40px rgba(147, 197, 253, 0.4);
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0% { box-shadow: 0 0 40px rgba(147, 197, 253, 0.4); }
-            50% { box-shadow: 0 0 60px rgba(147, 197, 253, 0.6); }
-            100% { box-shadow: 0 0 40px rgba(147, 197, 253, 0.4); }
-        }
-        
-        .card-hover {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            background: rgba(129, 140, 248, 0.05);
-            backdrop-filter: blur(12px);
+
+        /* Optimize glass effect */
+        .glass-effect {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(8px);
             border: 1px solid rgba(199, 210, 254, 0.1);
+            box-shadow: 0 4px 16px rgba(31, 38, 135, 0.2);
         }
-        
-        .card-hover:hover {
-            transform: translateY(-10px) scale(1.02);
-            background: rgba(129, 140, 248, 0.1);
-            box-shadow: 0 0 40px rgba(129, 140, 248, 0.5);
-            border: 1px solid rgba(199, 210, 254, 0.2);
-        }
-        
+
+        /* Simplify button hover effects */
         .btn-hover {
-            position: relative;
-            overflow: hidden;
-            transition: all 0.4s ease;
-            border: 1px solid rgba(199, 210, 254, 0.2);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
         
         .btn-hover:hover {
             transform: translateY(-2px);
-            box-shadow: 0 0 30px rgba(129, 140, 248, 0.5);
-        }
-        
-        .btn-hover::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                rgba(199, 210, 254, 0.2),
-                transparent
-            );
-            transition: 0.5s;
-        }
-        
-        .btn-hover:hover::before {
-            left: 100%;
-        }
-        
-        :root {
-            --trumpoly-primary: #818cf8; /* Mystical indigo */
-            --trumpoly-secondary: #c7d2fe; /* Ethereal lavender */
-            --trumpoly-accent: #4f46e5; /* Deep magical purple */
-            --trumpoly-glow: rgba(129, 140, 248, 0.5); /* Magical glow */
-        }
-        
-        .gradient-text {
-            background: linear-gradient(to right, var(--trumpoly-primary), var(--trumpoly-secondary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 20px var(--trumpoly-glow);
-        }
-        
-        .neon-border {
-            box-shadow: 0 0 10px rgba(147, 197, 253, 0.3);
-            border: 1px solid rgba(147, 197, 253, 0.2);
-        }
-        
-        @keyframes float {
-            0% {
-                transform: translateY(0px) scale(1);
-                filter: drop-shadow(0 0 20px rgba(147, 197, 253, 0.3));
-            }
-            50% {
-                transform: translateY(-20px) scale(1.02);
-                filter: drop-shadow(0 0 40px rgba(147, 197, 253, 0.5));
-            }
-            100% {
-                transform: translateY(0px) scale(1);
-                filter: drop-shadow(0 0 20px rgba(147, 197, 253, 0.3));
-            }
+            box-shadow: 0 0 20px rgba(129, 140, 248, 0.3);
         }
 
-        @keyframes glow {
-            0% {
-                box-shadow: 0 0 20px rgba(255,20,147,0.3);
-            }
-            50% {
-                box-shadow: 0 0 40px rgba(255,20,147,0.6);
-            }
-            100% {
-                box-shadow: 0 0 20px rgba(255,20,147,0.3);
-            }
+        /* Remove complex animations */
+        @keyframes float-particle { to { display: none; } }
+        @keyframes floatingOrb { to { display: none; } }
+        @keyframes rotateShape { to { display: none; } }
+        @keyframes floatingSpark { to { display: none; } }
+
+        /* Optimize image loading */
+        img {
+            opacity: 1;
+            transition: transform 0.2s ease;
         }
 
         .hero-image {
@@ -265,371 +96,62 @@
             position: relative;
         }
 
-        .hero-image-container::after {
-            content: '';
-            position: absolute;
-            inset: -20px;
-            background: radial-gradient(circle at 50% 50%, rgba(255,20,147,0.4) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
-            z-index: -1;
+        .hero-image:hover {
+            transform: none !important;
         }
 
-        .hero-image-container:hover::after {
-            opacity: 1;
+        .gradient-text {
+            background: linear-gradient(to right, var(--trumpoly-primary), var(--trumpoly-secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 20px var(--trumpoly-glow);
         }
 
-        @keyframes gradientBG {
-            0% {
-                background-position: 0% 50%;
-            }
-            50% {
-                background-position: 100% 50%;
-            }
-            100% {
-                background-position: 0% 50%;
-            }
-        }
-
-        @keyframes float-particle {
-            0% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 0;
-            }
-            50% {
-                opacity: 0.5;
-            }
-            100% {
-                transform: translateY(-100vh) rotate(360deg);
-                opacity: 0;
-            }
-        }
-
-        @keyframes floatingOrb {
-            0%, 100% {
-                transform: translate(0, 0) scale(1);
-                opacity: 0.3;
-            }
-            50% {
-                transform: translate(10px, -10px) scale(1.05);
-                opacity: 0.5;
-            }
-        }
-
-        @keyframes rotateShape {
-            0% {
-                transform: rotate(0deg) scale(1);
-            }
-            50% {
-                transform: rotate(180deg) scale(1.2);
-            }
-            100% {
-                transform: rotate(360deg) scale(1);
-            }
-        }
-
-        .background-effects {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            overflow: hidden;
-        }
-
-        .orb {
-            position: absolute;
-            border-radius: 50%;
-            background: radial-gradient(circle at 30% 30%, var(--trumpoly-primary), transparent);
-            mix-blend-mode: screen;
-            filter: blur(20px);
-            animation: floatingOrb 10s ease-in-out infinite;
-        }
-
-        .shape {
-            position: absolute;
-            opacity: 0.1;
-            animation: rotateShape 20s linear infinite;
-        }
-
-        .particle {
-            background: radial-gradient(circle at center, rgba(255,20,147,0.8), transparent);
-            animation: float-particle 15s ease-in-out infinite;
-        }
-
-        @keyframes neonPulse {
-            0%, 100% {
-                filter: drop-shadow(0 0 15px rgba(255,20,147,0.4)) brightness(1);
-            }
-            50% {
-                filter: drop-shadow(0 0 25px rgba(255,20,147,0.7)) brightness(1.2);
-            }
-        }
-
-        @keyframes floatingSpark {
-            0% {
-                transform: translate(0, 0) scale(0);
-                opacity: 0;
-            }
-            50% {
-                transform: translate(var(--moveX), var(--moveY)) scale(1);
-                opacity: 1;
-            }
-            100% {
-                transform: translate(calc(var(--moveX) * 2), calc(var(--moveY) * 2)) scale(0);
-                opacity: 0;
-            }
-        }
-
-        .spark {
-            position: fixed;
-            width: 3px;
-            height: 3px;
-            background: radial-gradient(circle at center, rgba(147, 197, 253, 1), transparent 80%);
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 0;
-            animation: floatingSpark 3s ease-in-out infinite;
-        }
-
-        .orb {
-            animation: floatingOrb 10s ease-in-out infinite, neonPulse 4s ease-in-out infinite;
-            mix-blend-mode: screen;
-        }
-
-        .shape {
-            animation: rotateShape 20s linear infinite, neonPulse 3s ease-in-out infinite;
-            mix-blend-mode: screen;
-        }
-
-        .background-effects::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
-                        rgba(147, 197, 253, 0.15) 0%, 
-                        rgba(147, 197, 253, 0.05) 25%, 
-                        transparent 50%);
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-
-        .glass-effect {
-            background: rgba(15, 23, 42, 0.7);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(199, 210, 254, 0.1);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-        }
-
-        .card-hover {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            background: rgba(129, 140, 248, 0.05);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(199, 210, 254, 0.1);
-        }
-        
-        .card-hover:hover {
-            transform: translateY(-10px) scale(1.02);
-            background: rgba(129, 140, 248, 0.1);
-            box-shadow: 0 0 40px rgba(129, 140, 248, 0.5);
-            border: 1px solid rgba(199, 210, 254, 0.2);
-        }
-
-        .hero-gradient {
-            background: radial-gradient(circle at center, rgba(129, 140, 248, 0.15) 0%, rgba(0,0,0,0) 70%),
-                        linear-gradient(135deg, rgba(79, 70, 229, 0.1) 0%, rgba(129, 140, 248, 0.1) 100%);
-        }
-
-        .btn-hover {
-            position: relative;
-            overflow: hidden;
-            transition: all 0.4s ease;
-            border: 1px solid rgba(199, 210, 254, 0.2);
-        }
-        
-        .btn-hover:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 30px rgba(129, 140, 248, 0.5);
-        }
-
-        .btn-hover::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                rgba(199, 210, 254, 0.2),
-                transparent
-            );
-            transition: 0.5s;
-        }
-
-        .btn-hover:hover::before {
-            left: 100%;
-        }
-
-        .feature-card {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(
-                circle at center,
-                rgba(129, 140, 248, 0.1) 0%,
-                transparent 60%
-            );
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .feature-card:hover::before {
-            opacity: 1;
-        }
-
-        @keyframes floatingOrb {
-            0%, 100% {
-                transform: translate(0, 0) scale(1);
-                opacity: 0.3;
-            }
-            50% {
-                transform: translate(10px, -10px) scale(1.05);
-                opacity: 0.5;
-            }
-        }
-
-        .orb {
-            background: radial-gradient(circle at 30% 30%, var(--trumpoly-primary), transparent);
-            mix-blend-mode: screen;
-        }
-
-        /* Update button gradients */
+        /* Restore button gradients */
         .primary-button {
             background: linear-gradient(135deg, var(--trumpoly-accent), var(--trumpoly-primary));
             border: 1px solid rgba(199, 210, 254, 0.2);
             box-shadow: 0 0 20px rgba(129, 140, 248, 0.3);
         }
 
-        /* Enhance scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
+        :root {
+            --trumpoly-primary: #818cf8; /* Mystical indigo */
+            --trumpoly-secondary: #c7d2fe; /* Ethereal lavender */
+            --trumpoly-accent: #4f46e5; /* Deep magical purple */
+            --trumpoly-glow: rgba(129, 140, 248, 0.5); /* Magical glow */
         }
 
-        ::-webkit-scrollbar-track {
-            background: rgba(15, 23, 42, 0.7);
+        /* Fix ALL emoji display across the site */
+        .text-6xl {
+            font-size: 4rem;
+            line-height: 1;
+            display: inline-block;
+            filter: none;
+            -webkit-text-fill-color: initial;
+            background: none;
+            color: currentColor;
         }
 
-        ::-webkit-scrollbar-thumb {
-            background: var(--trumpoly-primary);
-            border-radius: 4px;
+        /* Specific emoji colors */
+        .emoji-wizard {
+            color: #818cf8; /* Wizard color */
         }
 
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--trumpoly-accent);
+        .emoji-oracle {
+            color: #c7d2fe; /* Oracle color */
         }
 
-        /* Add magical sparkles animation */
-        .magical-sparkles {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
+        .emoji-dragon {
+            color: #4f46e5; /* Dragon color */
         }
 
-        .magical-sparkles::before,
-        .magical-sparkles::after {
-            content: '';
-            position: absolute;
-            width: 3px;
-            height: 3px;
-            border-radius: 50%;
-            background: var(--trumpoly-secondary);
-            animation: sparkle 1.5s infinite;
-            opacity: 0;
+        .emoji-sword {
+            color: #818cf8; /* Sword color */
         }
 
-        @keyframes sparkle {
-            0% {
-                opacity: 0;
-                transform: scale(0) rotate(0deg);
-            }
-            50% {
-                opacity: 1;
-                transform: scale(1) rotate(180deg);
-            }
-            100% {
-                opacity: 0;
-                transform: scale(0) rotate(360deg);
-            }
-        }
-
-        /* Enhanced card effects */
-        .glass-effect {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .glass-effect::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 200%;
-            height: 100%;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                rgba(199, 210, 254, 0.1),
-                transparent
-            );
-            transform: rotate(30deg);
-            transition: 0.5s;
-        }
-
-        .glass-effect:hover::after {
-            left: 100%;
-        }
-
-        /* Magical border effect */
-        .magical-border {
-            position: relative;
-        }
-
-        .magical-border::before {
-            content: '';
-            position: absolute;
-            inset: -2px;
-            background: linear-gradient(45deg, 
-                var(--trumpoly-primary), 
-                var(--trumpoly-accent),
-                var(--trumpoly-secondary)
-            );
-            border-radius: inherit;
-            z-index: -1;
-            animation: borderGlow 3s linear infinite;
-        }
-
-        @keyframes borderGlow {
-            0% {
-                filter: hue-rotate(0deg);
-            }
-            100% {
-                filter: hue-rotate(360deg);
-            }
+        .emoji-ai {
+            color: #93c5fd; /* AI color - bright blue */
         }
     </style>
 </head>
@@ -740,23 +262,23 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <!-- Story Card - Full Width -->
                     <div class="glass-effect p-8 rounded-3xl text-center transform hover:scale-105 transition-all duration-300 md:col-span-3 mb-8">
-                        <div class="text-6xl mb-4 gradient-text">🧙‍♂️</div>
+                        <div class="text-6xl mb-4 emoji-wizard">🧙‍♂️</div>
                         <h3 class="text-2xl font-bold mb-2">Trumpoly's Quest</h3>
                         <p class="text-gray-300 text-lg leading-relaxed">A wandering wizard embodying kindness, wisdom, bravery, and humility in his fight against evil.</p>
                     </div>
                     <!-- Other Cards -->
                     <div class="glass-effect p-8 rounded-3xl text-center transform hover:scale-105 transition-all duration-300">
-                        <div class="text-6xl mb-4 gradient-text">👑</div>
+                        <div class="text-6xl mb-4 emoji-oracle">👑</div>
                         <h3 class="text-2xl font-bold mb-2">Mejora's Wisdom</h3>
                         <p class="text-gray-300">The mystical oracle who guides our tale, sharing ancient wisdom and life lessons.</p>
                     </div>
                     <div class="glass-effect p-8 rounded-3xl text-center transform hover:scale-105 transition-all duration-300">
-                        <div class="text-6xl mb-4 gradient-text">🐉</div>
+                        <div class="text-6xl mb-4 emoji-dragon">🐉</div>
                         <h3 class="text-2xl font-bold mb-2">The Dark Emperor</h3>
                         <p class="text-gray-300">Asu Goverdragon, the corrupt emperor whose disciples spread chaos and destruction.</p>
                     </div>
                     <div class="glass-effect p-8 rounded-3xl text-center transform hover:scale-105 transition-all duration-300">
-                        <div class="text-6xl mb-4">⚔️</div>
+                        <div class="text-6xl mb-4 emoji-sword">⚔️</div>
                         <h3 class="text-2xl font-bold mb-2">The Fellowship</h3>
                         <p class="text-gray-300">Join the alliance of brave souls supporting Trumpoly in his quest for justice.</p>
                     </div>
@@ -817,7 +339,7 @@
                              style="filter: drop-shadow(0 0 20px rgba(147, 197, 253, 0.3));">
                     </div>
                     <div class="md:w-1/2 text-center md:text-left">
-                        <div class="text-6xl mb-4 gradient-text">🤖</div>
+                        <div class="text-6xl mb-4 emoji-ai">🤖</div>
                         <h2 class="text-4xl md:text-5xl font-bold mb-6 gradient-text">Meet Mejora - Your Mystical Guide</h2>
                         <p class="text-xl text-gray-300 mb-8 leading-relaxed">
                             Interact with Mejora, our magical AI storyteller powered by TopHat AI. Ask her about the tale of Trumpoly,
@@ -1276,7 +798,7 @@
         // Start typing effect after initial animation
         setTimeout(typeText, 1500);
 
-        // Enhanced 3D image effect with global mouse tracking
+        // Enhanced 3D image effect with mouse tracking
         const heroImage = document.querySelector('.hero-image');
         const heroContainer = document.querySelector('.hero-image-container');
 
@@ -1287,42 +809,26 @@
             const centerX = left + width / 2;
             const centerY = top + height / 2;
             
-            // Calculate distance from center of the screen
-            const mouseX = e.clientX - centerX;
-            const mouseY = e.clientY - centerY;
-            
-            // Calculate rotation based on mouse position relative to viewport
-            const rotateX = (mouseY / window.innerHeight) * 35;
-            const rotateY = (mouseX / window.innerWidth) * 35;
-            
-            // Add slight movement based on mouse position
-            const translateX = mouseX * 0.02;
-            const translateY = mouseY * 0.02;
+            // Calculate rotation based on mouse position
+            const mouseX = (e.clientX - centerX) * 0.02;
+            const mouseY = (e.clientY - centerY) * 0.02;
             
             heroImage.style.transform = `
-                    perspective(1000px)
-                rotateX(${-rotateX}deg)
-                rotateY(${rotateY}deg)
-                translateX(${translateX}px)
-                translateY(${translateY}px)
-                translateZ(30px)
-                scale3d(1.1, 1.1, 1.1)
-                `;
-            });
+                perspective(1000px)
+                rotateX(${-mouseY}deg)
+                rotateY(${mouseX}deg)
+                translateZ(10px)
+            `;
+        });
 
-        // Smooth reset when mouse leaves window
+        // Smooth reset when mouse leaves
         document.addEventListener('mouseleave', () => {
             if (!heroImage) return;
-            
-            heroImage.style.transition = 'transform 0.5s ease-out';
             heroImage.style.transform = `
                 perspective(1000px)
                 rotateX(0deg)
                 rotateY(0deg)
-                translateX(0)
-                translateY(0)
                 translateZ(0)
-                scale3d(1, 1, 1)
             `;
         });
 
