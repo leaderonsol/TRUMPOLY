@@ -24,13 +24,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.4/ScrollTrigger.min.js"></script>
     <style>
+        html {
+            scroll-behavior: smooth;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
         body {
             font-family: 'Space Grotesk', sans-serif;
             background: linear-gradient(
                 135deg, 
-                #0f172a 0%, /* Deep midnight blue */
-                #1e293b 25%, /* Royal navy */
-                #312e81 50%, /* Deep indigo */
+                #0f172a 0%,
+                #1e293b 25%,
+                #312e81 50%,
                 #1e293b 75%,
                 #0f172a 100%
             );
@@ -38,6 +44,34 @@
             animation: gradientBG 15s ease infinite;
             position: relative;
             overflow-x: hidden;
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        .container {
+            max-width: 100%;
+            overflow-x: hidden;
+            margin: 0 auto;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        section {
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+        }
+
+        /* Mobile optimization */
+        @media (max-width: 768px) {
+            .container {
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+            }
+            
+            .overflow-x-auto {
+                -webkit-overflow-scrolling: touch;
+            }
         }
         
         body::before {
@@ -835,7 +869,7 @@
 
     <!-- Footer -->
     <footer class="py-8 text-center">
-        <p class="text-gray-400">© 2025 $TRUMPOLY - Tales of Solanaburg. All rights reserved.</p>
+        <p class="text-gray-400">© 2024 $TRUMPOLY - Tales of Solanaburg. All rights reserved.</p>
     </footer>
 
     <script>
